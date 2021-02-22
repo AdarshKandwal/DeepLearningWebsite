@@ -1,0 +1,169 @@
+{% extends "basefacial.html" %} {% block content %}
+
+<h2 class="heading">Facial Expression Classifier Using CNN</h2>
+
+<div>
+    <form id="upload-file" class="formx" method="post" enctype="multipart/form-data">
+        <label for="imageUpload" class="upload-label">
+            Choose...
+        </label>
+        <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+    </form>
+
+    <div class="image-section" style="display:none;">
+        <div class="img-preview">
+            <div id="imagePreview">
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary btn-lg " id="btn-predict">Predict!</button>
+        </div>
+    </div>
+
+    <div class="loader" style="display:none;"></div>
+
+    <h3 id="result" style="color:white;">
+        <span> </span>
+    </h3>
+
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="box">
+            <div class="percent">
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle> 
+                    <circle cx="70" cy="70" r="70"></circle>
+                </svg>
+                <div class="number">
+                    <h2>64<span>%</span></h2>
+                </div>
+                <h2 class="text">Training Accuracy</h2>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="box">
+            <div class="percent">
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle> 
+                    <circle cx="70" cy="70" r="70"></circle>
+                </svg>
+                <div class="number">
+                    <h2>59.9<span>%</span></h2>
+                </div>
+                <h2 class="text">Testing Accuracy</h2>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="box">
+            <div class="percent">
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle> 
+                    <circle cx="70" cy="70" r="70"></circle>
+                </svg>
+                <div class="number">
+                    <h2>11<span>%</span></h2>
+                </div>
+                <h2 class="text">Loss Ratio</h2>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modellayer">
+<h1 class="modellayerheading"> 
+    MODEL USED
+</h1>
+<p class="modeltext">
+    Layer (type)                 Output Shape              Param #  <br>
+=================================================================<br>
+conv2d_1 (Conv2D)            (None, 48, 48, 64)        256       <br>
+_________________________________________________________________<br>
+conv2d_2 (Conv2D)            (None, 48, 48, 64)        12352     <br>
+_________________________________________________________________<br>
+batch_normalization_1 (Batch (None, 48, 48, 64)        256       <br>
+_________________________________________________________________<br>
+activation_1 (Activation)    (None, 48, 48, 64)        0         <br>
+_________________________________________________________________<br>
+max_pooling2d_1 (MaxPooling2 (None, 24, 24, 64)        0         <br>
+_________________________________________________________________<br>
+dropout_1 (Dropout)          (None, 24, 24, 64)        0         <br>
+_________________________________________________________________<br>
+conv2d_3 (Conv2D)            (None, 24, 24, 128)       24704     <br>
+_________________________________________________________________<br>
+conv2d_4 (Conv2D)            (None, 24, 24, 128)       49280     <br>
+_________________________________________________________________<br>
+batch_normalization_2 (Batch (None, 24, 24, 128)       512       <br>
+_________________________________________________________________<br>
+activation_2 (Activation)    (None, 24, 24, 128)       0         <br>
+_________________________________________________________________<br>
+max_pooling2d_2 (MaxPooling2 (None, 12, 12, 128)       0         <br>
+_________________________________________________________________<br>
+dropout_2 (Dropout)          (None, 12, 12, 128)       0         <br>
+_________________________________________________________________<br>
+conv2d_5 (Conv2D)            (None, 12, 12, 256)       98560     <br>
+_________________________________________________________________<br>
+conv2d_6 (Conv2D)            (None, 12, 12, 256)       196864    <br>
+_________________________________________________________________<br>
+batch_normalization_3 (Batch (None, 12, 12, 256)       1024      <br>
+_________________________________________________________________<br>
+activation_3 (Activation)    (None, 12, 12, 256)       0         <br>
+_________________________________________________________________<br>
+max_pooling2d_3 (MaxPooling2 (None, 6, 6, 256)         0         <br>
+_________________________________________________________________<br>
+dropout_3 (Dropout)          (None, 6, 6, 256)         0         <br>
+_________________________________________________________________<br>
+conv2d_7 (Conv2D)            (None, 6, 6, 512)         393728    <br>
+_________________________________________________________________<br>
+conv2d_8 (Conv2D)            (None, 6, 6, 512)         786944    <br>
+_________________________________________________________________<br>
+batch_normalization_4 (Batch (None, 6, 6, 512)         2048      <br>
+_________________________________________________________________<br>
+activation_4 (Activation)    (None, 6, 6, 512)         0         <br>
+_________________________________________________________________<br>
+max_pooling2d_4 (MaxPooling2 (None, 3, 3, 512)         0         <br>
+_________________________________________________________________<br>
+dropout_4 (Dropout)          (None, 3, 3, 512)         0         <br>
+_________________________________________________________________<br>
+flatten_1 (Flatten)          (None, 4608)              0         <br>
+_________________________________________________________________<br>
+dense_1 (Dense)              (None, 512)               2359808   <br>
+_________________________________________________________________<br>
+batch_normalization_5 (Batch (None, 512)               2048      <br>
+_________________________________________________________________<br>
+activation_5 (Activation)    (None, 512)               0         <br>
+_________________________________________________________________<br>
+dropout_5 (Dropout)          (None, 512)               0         <br>
+_________________________________________________________________<br>
+dense_2 (Dense)              (None, 256)               131328    <br>
+_________________________________________________________________<br>
+batch_normalization_6 (Batch (None, 256)               1024      <br>
+_________________________________________________________________<br>
+activation_6 (Activation)    (None, 256)               0         <br>
+_________________________________________________________________<br>
+dropout_6 (Dropout)          (None, 256)               0         <br>
+_________________________________________________________________<br>
+dense_3 (Dense)              (None, 7)                 1799      <br>
+_________________________________________________________________<br>
+activation_7 (Activation)    (None, 7)                 0         <br>
+=================================================================<br>
+Total params: 4,062,535<br>
+Trainable params: 4,059,079<br>
+Non-trainable params: 3,456<br>
+_________________________________________________________________<br>
+</p>
+
+</div>
+
+
+
+
+{% endblock %}
