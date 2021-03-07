@@ -11,4 +11,4 @@ This website contains small deep learning Projects that you can fork.
 <img src="https://github.com/AdarshKandwal/DeepLearningWebsite/blob/main/Git_Upload/Fruit_classifier.png"/>
 <br>
 <h5><b><i>Heroku Live link:<a href="https://projectsto.herokuapp.com/">https://projectsto.herokuapp.com/</a></i></b></h5>
- <h5><b><i>Docker Img Link:"Soon"</i></b></h5>
+ <h5><b><i>Docker Img Link:"**Updation Soon**"</i></b></h5>
